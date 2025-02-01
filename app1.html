@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lost and Found</title>
+  <style>
+    /* Global styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f8f8;
+      color: #333;
+    }
+
+    header {
+      background-color: #fff;
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #333;
+      margin: 0;
+    }
+
+    /* Navigation bar styles */
+    .navbar {
+      background-color: #1282A2; /* Blue shade */
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      transition: background-color 0.3s;
+      border-radius: 5px;
+    }
+
+    .navbar a:hover {
+      background-color: #4CAF50; /* Green hover effect */
+    }
+
+    .navbar .nav-buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar .nav-buttons a {
+      padding: 12px 25px;
+      background-color: #1282A2; /* Blue shade */
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .navbar .nav-buttons a:hover {
+      background-color: #4CAF50; /* Green hover effect */
+      transform: scale(1.05);
+    }
+
+    /* Feed and other styles remain the same */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .tab-button {
+      padding: 12px 25px;
+      margin: 0 10px;
+      background-color: #fafafa;
+      color: #333;
+      border: 1px solid #ddd;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .tab-button:hover {
+      background-color: #f2f2f2;
+    }
+
+    .tab-button.active {
+      background-color: #4CAF50;
+      color: white;
+      border-color: #4CAF50;
+    }
+
+    .feed {
+      max-width: 900px;
+      margin: 30px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 0 10px;
+    }
+
+    .post-card {
+      background-color: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .post-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .post-card h3 {
+      font-size: 1.2em;
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .post-card p {
+      font-size: 16px;
+      color: #666;
+    }
+
+    .contact-info {
+      font-weight: bold;
+      color: #4CAF50;
+      margin-top: 10px;
+    }
+
+    .button-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .button-container button {
+      padding: 12px 25px;
+      background-color: #1282A2; /* Blue shade */
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .button-container button:hover {
+      background-color: #4CAF50; /* Green hover effect */
+      transform: scale(1.05);
+    }
+
+    .create-post-container {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 100;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .create-post-container input,
+    .create-post-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .create-post-container select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .create-post-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #1282A2; /* Blue shade */
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .create-post-container button:hover {
+      background-color: #4CAF50; /* Green hover effect */
+      transform: scale(1.05);
+    }
+
+    .comment-section {
+      margin-top: 15px;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+    }
+
+    .comment {
+      margin-bottom: 10px;
+    }
+
+    .comment input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .comment button {
+      background-color: #1282A2; /* Blue shade */
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .comment button:hover {
+      background-color: #4CAF50; /* Green hover effect */
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div>
+      <a href="#" onclick="showTab('all')">Home</a>
+    </div>
+    <div class="nav-buttons">
+      <a href="#" onclick="showTab('lost')">Lost Items</a>
+      <a href="#" onclick="showTab('found')">Found Items</a>
+      <a href="#" onclick="openCreatePost()">Create a Post</a>
+    </div>
+  </div>
+
+  <!-- Feed to display posts -->
+  <section class="feed" id="post-feed">
+    <!-- Posts will appear here dynamically -->
+  </section>
+
+  <!-- Modal for creating a new post -->
+  <div class="create-post-container" id="create-post-container">
+    <h2>Create a Post</h2>
+    
+    <label for="post-text">Write a description:</label>
+    <textarea id="post-text" placeholder="Write your post here..." required></textarea>
+
+    <label for="post-image">Upload a Photo (optional):</label>
+    <input type="file" id="post-image" accept="image/*">
+
+    <label for="post-type">Type:</label>
+    <select id="post-type" required>
+      <option value="lost">Lost</option>
+      <option value="found">Found</option>
+    </select>
+
+    <button onclick="submitPost()">Submit Post</button>
+    <button onclick="closeCreatePost()">Cancel</button>
+  </div>
+
+  <script>
+
+  // Clear all posts from localStorage when the page loads
+  window.onload = () => {
+    // Clear the localStorage to remove all posts
+    localStorage.clear();
+    
+    showTab('all'); // Refresh the feed with no posts
+  }
+
+  // Open the modal to create a new post
+  function openCreatePost() {
+    document.getElementById('create-post-container').style.display = 'block';
+  }
+
+  // Close the modal
+  function closeCreatePost() {
+    document.getElementById('create-post-container').style.display = 'none';
+  }
+
+  // Function to show posts of the selected tab
+  function showTab(type) {
+    const posts = JSON.parse(localStorage.getItem('posts')) || [];
+    const feed = document.getElementById('post-feed');
+    feed.innerHTML = ''; // Clear the feed before rendering
+
+    // Show relevant posts based on the tab clicked
+    const filteredPosts = posts.filter(post => post.type === type || type === 'all');
+    filteredPosts.forEach(post => {
+      const postCard = document.createElement('div');
+      postCard.classList.add('post-card');
+      
+      // Display post image and text
+      let imageHtml = '';
+      if (post.image) {
+        imageHtml = `<img src="${URL.createObjectURL(post.image)}" alt="Post Image">`;
+      }
+      
+      postCard.innerHTML = `
+        ${imageHtml}
+        <h3>${post.text || 'No description available'}</h3>
+        <p>${post.text || 'Please provide more details about the item.'}</p>
+      `;
+
+      // Comment section
+      const commentSection = document.createElement('div');
+      commentSection.classList.add('comment-section');
+      
+      // Add comments for the post
+      const comments = post.comments || [];
+      comments.forEach(comment => {
+        const commentDiv = document.createElement('div');
+        commentDiv.classList.add('comment');
+        commentDiv.textContent = comment;
+        commentSection.appendChild(commentDiv);
+      });
+
+      // Input for new comment
+      const commentInput = document.createElement('input');
+      commentInput.type = 'text';
+      commentInput.placeholder = 'Add a comment...';
+      commentSection.appendChild(commentInput);
+
+      // Add comment button
+      const commentButton = document.createElement('button');
+      commentButton.textContent = 'Comment';
+      commentButton.onclick = () => addComment(post, commentInput.value);
+      commentSection.appendChild(commentButton);
+
+      postCard.appendChild(commentSection);
+      feed.appendChild(postCard);
+    });
+  }
+
+  // Function to handle post submission
+  function submitPost() {
+    const postText = document.getElementById('post-text').value;
+    const postImage = document.getElementById('post-image').files[0];
+    const postType = document.getElementById('post-type').value;
+
+    // Ensure text is provided
+    if (!postText.trim()) {
+      alert('Please provide a description for the post!');
+      return;
+    }
+
+    const newPost = { text: postText, image: postImage, type: postType, comments: [] };
+
+    let posts = JSON.parse(localStorage.getItem('posts')) || [];
+    posts.push(newPost);
+    localStorage.setItem('posts', JSON.stringify(posts));
+
+    closeCreatePost();
+    showTab(postType); // Refresh the feed with the newly added post
+  }
+
+  // Function to add a comment
+  function addComment(post, commentText) {
+    if (!commentText.trim()) return; // Avoid adding empty comments
+
+    const posts = JSON.parse(localStorage.getItem('posts')) || [];
+    const postIndex = posts.findIndex(p => p.text === post.text);  // Find the post by its text
+
+    // Add comment to the respective post
+    posts[postIndex].comments.push(commentText);
+    localStorage.setItem('posts', JSON.stringify(posts));
+
+    showTab(post.type); // Refresh the comments display
+  }
+</script>
+
+
+</body>
+</html>
