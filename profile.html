@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editable Profile Page</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #6dd5ed, #2193b0);
+      margin: 0;
+      padding: 0;
+      color: #333;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .dark-mode {
+      background: #121212;
+      color: #fff;
+    }
+
+    .profile-container {
+      width: 90%;
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .dark-mode .profile-container {
+      background: #1e1e1e;
+      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-pic {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      background: lightblue;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      border: 5px solid #2193b0;
+      overflow: hidden;
+    }
+
+    #profile-pic-input {
+      display: none;
+    }
+
+    .change-pic-button {
+      margin: 10px auto 0;
+      display: inline-block;
+      padding: 8px 15px;
+      background: #147f9c;
+      color: white;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .change-pic-button:hover {
+      background: #45a049;
+    }
+
+    h2 {
+      font-size: 22px;
+      color: inherit;
+      margin: 0;
+    }
+
+    h3 {
+      margin-bottom: 15px;
+      color: inherit;
+      font-size: 18px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+      color: inherit;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      background: #fff;
+      color: #333;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .dark-mode input[type="text"],
+    .dark-mode input[type="email"],
+    .dark-mode textarea {
+      background: #333;
+      color: #fff;
+      border: 1px solid #555;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    .toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .toggle input {
+      transform: scale(1.5);
+    }
+
+    .actions button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      color: white;
+      transition: background 0.3s;
+    }
+
+    .save-profile {
+      background: #4caf50;
+    }
+
+    .logout {
+      background: #f1c40f;
+    }
+
+    .delete-account {
+      background: #e74c3c;
+    }
+
+    .save-profile:hover {
+      background: #45a049;
+    }
+
+    .logout:hover {
+      background: #d9b10e;
+    }
+
+    .delete-account:hover {
+      background: #d23f2f;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <div class="profile-header">
+      <div class="profile-pic" id="profile-picture">
+        <!-- Placeholder for Profile Picture -->
+      </div>
+      <label for="profile-pic-input">
+        <button class="change-pic-button">Change Profile Picture</button>
+      </label>
+      <input type="file" id="profile-pic-input" accept="image/*">
+      <h2>Profile</h2>
+    </div>
+
+    <!-- Full Name Input -->
+    <div class="profile-info">
+      <h3>Personal Information</h3>
+      <label for="full-name">Full Name</label>
+      <input type="text" id="full-name" placeholder="Enter your full name">
+
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Enter your username">
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email address">
+
+      <label for="phone">Phone</label>
+      <input type="text" id="phone" placeholder="Enter your phone number">
+    </div>
+
+    <!-- Activity Summary -->
+    <div class="activity-summary">
+      <h3>Activity Summary</h3>
+      <textarea id="activity-summary" rows="5" placeholder="Describe your activities...">No activity summary available</textarea>
+    </div>
+
+    <!-- Settings -->
+    <div class="settings">
+      <h3>Settings</h3>
+      <div class="toggle">
+        <label>Privacy</label>
+        <input type="checkbox" id="privacy">
+      </div>
+      <div class="toggle">
+        <label>Notifications</label>
+        <input type="checkbox" id="notifications">
+      </div>
+      <div class="toggle">
+        <label>Dark Mode</label>
+        <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="save-profile" onclick="saveProfile()">Save Changes</button>
+      <button class="logout">Logout</button>
+      <button class="delete-account">Delete Account</button>
+    </div>
+  </div>
+
+  <script>
+    // Function to save profile information
+    function saveProfile() {
+      const fullName = document.getElementById("full-name").value;
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const privacy = document.getElementById("privacy").checked;
+      const notifications = document.getElementById("notifications").checked;
+
+      alert(`
+        Profile Saved!
+        Full Name: ${fullName} 
+        Username: ${username}
+        Email: ${email}
+        Phone: ${phone}
+        Privacy: ${privacy ? "Enabled" : "Disabled"}
+        Notifications: ${notifications ? "Enabled" : "Disabled"}
+      `);
+    }
+
+    // Function to toggle dark mode
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+  </script>
+</body>
+</html>

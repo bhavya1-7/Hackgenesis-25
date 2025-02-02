@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trace !t</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e0f7fa, #006064);
+            gap: 2rem;
+            padding: 20px;
+        }
+
+        /* Logo Styles */
+        .logo-container {
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+            background: #ffffff;
+            position: relative;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-container:before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 25px;
+            background: linear-gradient(90deg, #ffcc00, #00e5ff, #ff4081, #7c4dff);
+            background-size: 300% 300%;
+            animation: gradientBorder 3s infinite;
+            z-index: -1;
+        }
+
+        .logo-icon {
+            display: inline-block;
+            position: relative;
+            font-size: 4em;
+            font-weight: bold;
+            color: #00acc1;
+            transform: rotate(5deg);
+            text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-icon span {
+            font-size: 1.5em;
+            color: #00acc1;
+            text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-text {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: 600;
+            background: linear-gradient(90deg, #ffcc00, #00e5ff, #ff4081, #7c4dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 3s infinite;
+        }
+
+        /* Login Form Styles */
+        .login-box {
+            display: flex;
+            width: 450px;
+            height: 280px;
+            background: linear-gradient(135deg, #147f9c, #FEFCFB);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 0px 15px rgba(11, 96, 146, 0.559);
+        }
+
+        .left-box {
+            width: 60%;
+            background: #FEFCFB;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-box {
+            width: 40%;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        h2 {
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        .input-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #2b87a1;
+            outline: none;
+            color: rgb(26, 7, 7);
+            font-size: 16px;
+        }
+
+        .input-box label {
+            position: absolute;
+            left: 0;
+            bottom: 10px;
+            color: rgb(27, 8, 8);
+            transition: 0.3s;
+        }
+
+        .input-box input:focus + label,
+        .input-box input:valid + label {
+            bottom: 30px;
+            font-size: 12px;
+            color: #1fa8ce;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: rgba(64, 148, 187, 0.677);
+            border: none;
+            color: rgb(12, 1, 1);
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: darkred;
+        }
+
+        .signup-text {
+            text-align: center;
+            margin-top: 10px;
+            color: rgb(18, 3, 3);
+        }
+
+        .signup-text a {
+            color: #1282A2;
+            text-decoration: none;
+        }
+
+        @keyframes gradientBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Section -->
+    <div class="logo-container">
+        <div class="logo-icon">
+            T<span>!</span>
+        </div>
+        <div class="logo-text">
+            <p>Lost Today Found Tomorrow</p>
+        </div>
+    </div>
+
+    <!-- Login Section -->
+    <div class="login-box">
+        <div class="left-box">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="input-box">
+                    <input type="text" id="username" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="password" required>
+                    <label>Password</label>
+                </div>
+                <button type="submit">Login</button>
+                <p class="signup-text">Don't have an account? <a href="#">Sign Up</a></p>
+            </form>
+        </div>
+        <div class="right-box">
+            Welcome to Trace !t
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            if (username === "admin" && password === "1234") {
+                alert("Login successful!");
+                window.location.href = "dashboard.html";
+            } else {
+                alert("Invalid username or password. Try again!");
+            }
+        });
+    </script>
+</body>
+</html>

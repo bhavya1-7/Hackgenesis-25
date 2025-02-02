@@ -37,6 +37,8 @@ function showPage(pageId) {
       document.getElementById('accountDropdown').style.display = 'none';
       showPage('login');
     }
+  
+    // ... other window.onload code here
   }
   
   // Define a function to handle login
@@ -77,14 +79,6 @@ function showPage(pageId) {
   function showLoggedInContent() {
     document.getElementById('loginButton').style.display = 'none';
     document.getElementById('accountDropdown').style.display = 'block';
-  }
-  
-  // Check if the user is logged in on page load
-  window.onload = function() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    if (isLoggedIn) {
-      showLoggedInContent();
-    }
   }
   
   function previewImage(event) {
@@ -150,24 +144,6 @@ function showPage(pageId) {
       return;
     }
 
-    function handleLogin(event) {
-        event.preventDefault();
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
-        
-        // Here you would typically send this data to your server
-        console.log({
-          email,
-          password
-        });
-        
-        // Show success message
-        alert('Login successful!');
-        
-        // Redirect to home page
-        showPage('home');
-      }
-  
     // Here you would typically send this data to your server
     alert(`
       Profile Updated Successfully!
@@ -215,7 +191,7 @@ function showPage(pageId) {
     if (file) {
       const reader = new FileReader();
       reader.onload = function(e) {
-        document.getElementById('profile-picture').style.backgroundImage = `url(${e.target.result})`;
+        document.getElementById('profile-picture').style.backgroundImage = 'url(' + e.target.result + ')';
         document.getElementById('profile-picture').style.backgroundSize = 'cover';
         document.getElementById('profile-picture').style.backgroundPosition = 'center';
       };
@@ -309,8 +285,82 @@ function showPage(pageId) {
   }
   
   // Load recent posts when the page loads
-  window.onload = function() {
-    showPage('home');
-    const recentPosts = JSON.parse(localStorage.getItem('recentPosts') || '[]');
-    displayRecentPosts(recentPosts);
-  }
+  // window.onload = function() {
+  //   showPage('home');
+  //   const recentPosts = JSON.parse(localStorage.getItem('recentPosts') || '[]');
+  //   displayRecentPosts(recentPosts);
+  // }
+  
+  // Define a function to display posts
+function displayPosts() {
+  const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+  const postsGrid = document.getElementById('postsGrid');
+  postsGrid.innerHTML = '';
+  
+  posts.forEach((post) => {
+    const postCard = document.createElement('div');
+    postCard.className = 'post-card';
+    postCard.innerHTML = `
+      <h2>${post.itemName}</h2>
+      <p>Type: ${post.type}</p>
+      <p>Category: ${post.category}</p>
+      <p>Description: ${post.description}</p>
+      <p>Location: ${post.location}</p>
+      <p>Date: ${post.date}</p>
+    `;
+    postsGrid.appendChild(postCard);
+  });
+}
+
+// Define a function to display found items
+function displayFoundItems() {
+  const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+  const foundItemsGrid = document.getElementById('foundItemsGrid');
+  foundItemsGrid.innerHTML = '';
+  
+  posts.forEach((post) => {
+    if (post.type === 'found') {
+      const postCard = document.createElement('div');
+      postCard.className = 'post-card';
+      postCard.innerHTML = `
+        <h2>${post.itemName}</h2>
+        <p>Type: ${post.type}</p>
+        <p>Category: ${post.category}</p>
+        <p>Description: ${post.description}</p>
+        <p>Location: ${post.location}</p>
+        <p>Date: ${post.date}</p>
+      `;
+      foundItemsGrid.appendChild(postCard);
+    }
+  });
+}
+
+// Define a function to display lost items
+function displayLostItems() {
+  const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+  const lostItemsGrid = document.getElementById('lostItemsGrid');
+  lostItemsGrid.innerHTML = '';
+  
+  posts.forEach((post) => {
+    if (post.type === 'lost') {
+      const postCard = document.createElement('div');
+      postCard.className = 'post-card';
+      postCard.innerHTML = `
+        <h2>${post.itemName}</h2>
+        <p>Type: ${post.type}</p>
+        <p>Category: ${post.category}</p>
+        <p>Description: ${post.description}</p>
+        <p>Location: ${post.location}</p>
+        <p>Date: ${post.date}</p>
+      `;
+      lostItemsGrid.appendChild(postCard);
+    }
+  });
+}
+
+// Call the displayPosts function when the page loads
+// window.onload = function() {
+//   displayPosts();
+//   displayFoundItems();
+//   displayLostItems();
+// }

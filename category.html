@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lost and Found</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f4f8;
+      color: #333;
+    }
+
+    /* Navigation Bar */
+    .navbar {
+      background-color: #005f73;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      color: #14759c;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar a {
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 20px;
+      font-size: 18px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .navbar a:hover {
+      background-color: #94d2bd;
+      transform: translateY(-2px);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .content {
+      display: none;
+      padding: 20px;
+    }
+
+    /* Category Page */
+    .category-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 30px;
+    }
+
+    .category-block {
+      width: 200px;
+      height: 300px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      background: linear-gradient(135deg, #147f9c, #FEFCFB);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .category-block:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div>
+      <a href="#" onclick="showPage('home')">Home</a>
+      <a href="#" onclick="showPage('category')">Category</a>
+    </div>
+    <div class="nav-buttons">
+      <a href="#" onclick="showPage('lost')">Lost Items</a>
+      <a href="#" onclick="showPage('found')">Found Items</a>
+      <a href="#" onclick="openCreatePost()">Create a Post</a>
+    </div>
+  </div>
+
+  <!-- Category Page -->
+  <div class="content" id="category">
+    <h2>Choose a Category</h2>
+    <div class="category-container">
+      <div class="category-block">Electronic Items</div>
+      <div class="category-block">Money</div>
+      <div class="category-block">Documents</div>
+      <div class="category-block">Household</div>
+      <div class="category-block">Vehicles</div>
+      <div class="category-block">Personal Items</div>
+      <div class="category-block">Accessories</div>
+      <div class="category-block">Miscellaneous</div>
+    </div>
+  </div>
+
+  <script>
+    function showPage(page) {
+      document.querySelectorAll('.content').forEach(section => section.style.display = 'none');
+      document.getElementById(page).style.display = 'block';
+    }
+
+    // Show Home page by default
+    showPage('home');
+  </script>
+
+</body>
+</html>
